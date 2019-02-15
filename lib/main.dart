@@ -1,18 +1,12 @@
-import "package:flutter/material.dart";
+import "package:flutter/material.dart" show runApp;
+import "package:insta_cleaner/di.dart" as di;
 
-import "home_page.dart" show HomePage;
+import "app.dart" show configureDi, InstaCleaner;
+import "config.dart" show AppConfig;
 
-void main() => runApp(InstaCleaner());
+Future<void> main() async {
+  di.Container.registerSingleton<AppConfig>(di.Provider.fromInstance(AppConfig(apiAddress: "http://10.0.2.2:8080")));
+  await configureDi();
 
-class InstaCleaner extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Insta Cleaner",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-    );
-  }
+  runApp(InstaCleaner());
 }
